@@ -1,0 +1,226 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Voiture index{% endblock %}
+
+{% block body %}
+    <h1>Voiture index</h1>
+        <a href="{{ path('voiture_new') }}">Create new</a>
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Matricule</th>
+                <th>Marque</th>
+                <th>Couleur</th>
+                <th>Carburant</th>
+                <th>Nbr_place</th>
+                <th>Description</th>
+                <th>Disponibilite</th>
+                <th>Date_circulation</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for voiture in voitures %}
+            <tr>
+                <td>{{ voiture.id }}</td>
+                <td>{{ voiture.Matricule }}</td>
+                <td>{{ voiture.Marque }}</td>
+                <td>{{ voiture.Couleur }}</td>
+                <td>{{ voiture.Carburant }}</td>
+                <td>{{ voiture.nbrPlace }}</td>
+                <td>{{ voiture.description }}</td>
+                <td>
+                {% if voiture.disponibilite %}
+                                    <a href="{{ path('rendrevoiture', {'id': voiture.id}) }}" target="_blank">Rendre</a> 
+                                    <a href="{{ path('louervoiture', {'id': voiture.id}) }}" target="_blank">Louer</a> 
+
+                                    {% else%}
+                                    
+                                                            - 
+                                    
+                                                                {% endif%}
+                                    
+                </td>
+
+                <td>{{ voiture.dateCirculation ? voiture.dateCirculation|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('voiture_show', {'id': voiture.id}) }}">show</a>
+                    <a href="{{ path('voiture_edit', {'id': voiture.id}) }}">edit</a>
+                </td>
+            </tr>
+
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+<div class="row">
+                <div class="col s12">
+                       <h5>Facture</h5>
+<table class="table">
+                        <tr>
+                            <th>#</th>
+                            <th>Montant</th>
+                            <th>Payee</th>
+                            <th>Actions</th>
+                        </tr>
+ {% set i = 1 %}
+                        {% for facture in factures %}
+                        
+                         <tr>
+                                <td>{{ i }}</td>
+                                <td>{{ facture.Montant|e }}  </td>
+                                <td>{{ facture.Payee|e }} </td>
+                              <td>  {%if facture.Payee==null%}
+        <a href="{{ path('payeebyid', {id: facture.id}) }}" >Payee</a><br>
+        {%endif%}</td>
+
+
+                                                                </tr>
+                                                                {% set i = i+1 %}
+                                                            {% endfor %}
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+<div class="row">
+                <div class="col s12">
+                       <h5>Contrat</h5>
+
+<table class="table">
+                        <tr>
+                            <th>#</th>
+                            <th>Date de depart</th>
+                            <th>Date de retour</th>
+                            
+                            <th>Actions</th>
+                        </tr>
+
+ {% set i = 1 %}
+                        {% for contrat in contrats %}
+                        
+                         <tr>
+                                <td>{{ i }}</td>
+                                <td>{{ contrat.DateDepart|date('Y-m-d')|e }}  </td>
+                                <td>{{ contrat.DateRetour|date('Y-m-d')|e }} </td>
+                               
+
+                              <td>
+                                   <a href="{{ path('contrat_edit', {id: contrat.id}) }}" target="_blank">Modifier</a> 
+                                    </td>
+
+
+                                                                </tr>
+                                                                {% set i = i+1 %}
+                                                            {% endfor %}
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+
+
+<div class="row">
+                <div class="col s12">
+                       <h5>Client</h5>
+
+<table class="table">
+                        <tr>
+                            <th>#</th>
+                            <th>Nom</th>
+                            <th>Ville</th>
+                            <th>Tel</th>
+                            <th>Num permis</th>
+                            <th>Actions</th>
+                        </tr>
+ {% set i = 1 %}
+                        {%for client in clients %}
+                        
+                         <tr>
+                                <td>{{ i }}</td>
+                                <td>{{client.Nom|e}}  </td>
+                                <td>{{client.ville|e}} </td>
+                                <td>{{client.Tel|e}} </td>
+                                <td> {{client.Numpermis|e}} </td>
+                
+
+                              <td>
+                                   <a href="{{ path('client_edit', {id: client.id}) }}" target="_blank">Modifier</a> 
+                                    </td>
+
+                              <td>
+                                   <a href="{{ path('client_delete', {id: client.id}) }}" target="_blank">Supprimer</a> 
+                                    </td>
+
+                                                                </tr>
+                                                                {% set i = i+1 %}
+                                                            {% endfor %}
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+
+<div class="row">
+                <div class="col s12">
+                       <h5>Statiques</h5>
+
+<table class="table">
+                    <tr>
+                    <th>Nombres de voitures disponibles</th>
+                
+                     
+ {% set i = 0 %}
+                        {% for voiture in voitures %}
+                         
+                             <td>  {%if voiture.disponibilite==1%}   </td>
+                                                {% set i = i+1 %}
+                                     {%endif%}
+                        {%endfor%}
+                        </tr>
+                        <td>   {{ i }}        </td>   
+
+                    <tr>
+                    <th>Nombres de voitures à rendre</th>
+{% set j = 0 %} 
+                        {% for voiture in voitures %}
+                        <td>    {%if voiture.disponibilite==0%} </td>
+                                                {% set j= j+1 %}
+
+                                                             {%endif%}
+                        {%endfor%}
+                          </tr>
+                        <td>   {{ j }}        </td>   
+
+
+                    <tr>
+                    <th>Nombres de facture impayée </th>
+{% set t = 0 %} 
+                        {% for facture in factures %}
+                        <td>    {%if facture.Payee==0%} </td>
+                                                {% set t= t+1 %}
+
+                                                             {%endif%}
+                        {%endfor%}
+                          </tr>
+                        <td>   {{ t }}        </td>   
+
+
+
+
+
+
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+
+{% endblock %}
+
+
+
+

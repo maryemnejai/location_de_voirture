@@ -1,0 +1,37 @@
+
+{% extends 'base.html.twig' %}
+
+
+
+{% block title %}Admin{% endblock %}
+
+{% block body %}
+    <div class="admin-page">
+        <div class="container">
+            <div class="row">
+                <div class="col s12">
+                       <h5>Voitures</h5>
+
+                    <a href="{{ path('voiture_index') }}" class=navbar-brand">Gérer Voiture</a><br>
+
+                </div>
+            </div>
+<div class="row">
+                <div class="col s12 m-t-30">
+                
+                    <h5>Utilisateurs</h5>
+                    <a href="{{ path('app_register') }}" class=navbar-brand">Ajouter Utilisateurs</a><br>
+
+                    <h5>Agence</h5>
+                    <a href="{{ path('agence_index') }}" class=navbar-brand">Gérer Agences</a><br>
+
+                    
+            </div>
+
+    
+    
+
+
+
+
+{% endblock %} 

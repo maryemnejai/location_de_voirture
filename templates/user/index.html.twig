@@ -1,0 +1,46 @@
+
+{% extends 'base.html.twig' %}
+
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+
+<div class="row">
+                <div class="col s12 m-t-30">
+               
+                    <h5>Utilisateurs</h5>
+                    <a href="{{ path('app_register') }}" class=navbar-brand">Ajouter</a><br>
+          <table class="table">
+                        <tr>
+                            <th>#</th>
+                            <th>Adresse email</th>
+                            <th>Roles</th>
+                            
+                           
+                        </tr>
+{% set j = 1 %}
+                        {% for user in users %}
+                            <tr>
+                                <td>{{ j }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>
+                                   {% for role in user.roles %}
+                                   {{ role }}
+                                   {% endfor %}
+                                </td>
+                                 
+                            </tr>
+                            {% set j = j+1 %}
+                        {% endfor %}
+                    </table>
+</div>
+            </div>
+            {% endblock %}
+
+
+
+
+                                         
+
+
